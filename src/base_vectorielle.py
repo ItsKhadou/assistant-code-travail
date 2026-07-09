@@ -128,14 +128,24 @@ class BaseVectorielle:
     #  Jalon 3 : retrieval semantique
     # ------------------------------------------------------------------
     def rechercher(self, question: str, k: int = TOP_K) -> list[Extrait]:
+        """Sur-interroge (k*3) puis deduplique par numero d'article : sans
+        cela, un article sous-decoupe en plusieurs chunks pouvait occuper
+        plusieurs places du top-k au detriment d'autres articles pertinents."""
         collection = self.charger()
         vecteur = self.modele.encode(question, normalize_embeddings=True)
-        res = collection.query(query_embeddings=[vecteur.tolist()], n_results=k)
-        return [Extrait(numero=m["numero"], titre=m.get("titre", ""),
-                        section=m["section"], texte=t,
-                        similarite=round(1 - d, 4))
-                for t, m, d in zip(res["documents"][0], res["metadatas"][0],
-                                   res["distances"][0])]
+        res = collection.query(query_embeddings=[vecteur.tolist()], n_results=k * 3)
+        extraits = [Extrait(numero=m["numero"], titre=m.get("titre", ""),
+                            section=m["section"], texte=t,
+                            # distance cosinus d = 1 - cos => similarite = 1 - d
+                            similarite=round(1 - d, 4))
+                    for t, m, d in zip(res["documents"][0], res["metadatas"][0],
+                                       res["distances"][0])]
+        vus, dedupliques = set(), []
+        for e in extraits:
+            if e.numero not in vus:
+                vus.add(e.numero)
+                dedupliques.append(e)
+        return dedupliques[:k]
 
     # ------------------------------------------------------------------
     #  Jalon 6 : acces exact par numero (brique de la recherche hybride)
