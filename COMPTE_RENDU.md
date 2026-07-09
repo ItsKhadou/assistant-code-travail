@@ -1,4 +1,4 @@
-# Compte rendu (1 page) — À RÉDIGER PAR LE BINÔME
+# Compte rendu (1 page) — 
 
 > Le correcteur attend VOTRE vécu. Trame — supprimez ces consignes.
 
