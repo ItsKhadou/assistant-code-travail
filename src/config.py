@@ -14,7 +14,7 @@ MODELE_LLM = "llama-3.3-70b-versatile"  # verifier le catalogue Groq du jour
 
 # --- Parametres RAG ----------------------------------------------------
 NOM_COLLECTION = "code_travail"
-TOP_K = 5
+TOP_K = 8
 TEMPERATURE = 0.1
 MAX_TOKENS = 1024
 TAILLE_MAX_CHUNK = 1500  # caracteres avant sous-decoupage
@@ -25,7 +25,7 @@ TAILLE_MAX_CHUNK = 1500  # caracteres avant sous-decoupage
 # bonnes reponses (top-1 correct) entre 0.78 et 0.82, questions hors
 # corpus entre 0.25 et 0.58. Seuil place au-dessus du plafond hors corpus,
 # avec marge sous le plancher des bonnes reponses.
-SEUIL_CONFIANCE = 0.35
+SEUIL_CONFIANCE = 0.60
 
 # --- Garanties codees en dur (jamais confiees au LLM) -------------------
 AVERTISSEMENT = (
