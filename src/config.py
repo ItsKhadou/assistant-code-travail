@@ -33,3 +33,5 @@ AVERTISSEMENT = (
     "avocat ou l'inspection du travail pour votre situation personnelle."
 )
 PHRASE_ECHEC = "Je ne trouve pas cette information dans ma base."
+
+
